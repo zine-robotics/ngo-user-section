@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "601341921167",
+    "firebase_url": "https://ngouser-668ff.firebaseio.com",
+    "project_id": "ngouser-668ff",
+    "storage_bucket": "ngouser-668ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601341921167:android:5815b6b1c50991e9caedfa",
+        "android_client_info": {
+          "package_name": "rushilmakkar.ngouser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601341921167-glm1u6htprb9rb51k0fqj86ac9b0hrsh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFOH-Rd_0MjOQ_j_NZzpsOS7udAuHsJlE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601341921167-glm1u6htprb9rb51k0fqj86ac9b0hrsh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
