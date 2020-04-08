@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ngouser/widgets/RequestTab.dart';
 import 'package:ngouser/widgets/homeTab.dart';
 import 'package:ngouser/widgets/uploadTab.dart';
 import './choice.dart';
@@ -75,7 +76,10 @@ class _homepageState extends State<homepage> with SingleTickerProviderStateMixin
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            HomeTab(this.uid),
+            //HomeTab(this.uid),
+            //SizedBox(child: CircularProgressIndicator(),height:30 ,width: 30,),
+            //HomeTab(this.uid),
+            RequestTab(this.uid),
             uploadTab(widget.img,widget.location,widget.initialPage,uid),
           ],
         ),
