@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ngouser/widgets/login.dart';
+import 'package:ngouser/widgets/splash.dart';
 import 'package:ngouser/widgets/takePicture.dart';
+import 'package:ngouser/widgets/username.dart';
 import './widgets/choice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import './widgets/page1.dart';
 import './widgets/homepage.dart';
 import 'package:camera/camera.dart';
+// Add email for each user in database
+
 
 //var firstCamera;
 bool _user = false;
@@ -17,8 +22,11 @@ Future<void> main() async {
 
   // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.first;
+//SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  //  .then((_) {
+      runApp(new MyApp(firstCamera));
+   // });
 
-  runApp(MyApp(firstCamera));
 }
 
 class MyApp extends StatefulWidget {
@@ -37,28 +45,38 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     getUser().then((user) {
-      if (user != null) {
-        setState(() {
-          _user = true;
-        });
+      
+      setState(() {
+        if (user != null) {
+        _user = true;
       }
+      });
     });
+
+    // Future.delayed(Duration(seconds: 4), () {});
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+    
+      theme: ThemeData(
+        primaryColor: Colors.teal,
+      ),
       title: 'NGO app',
       routes: <String, WidgetBuilder>{
         '/choice': (BuildContext context) => new choice(),
-        '/login': (BuildContext context) => new login(),
+        '/login': (BuildContext context) => new login(widget.cam),
         //'/page1':(BuildContext context)=>new page1(),
-        '/homepage': (BuildContext context) => new homepage(null,null,null),
-        '/takePicture': (BuildContext context) => new TakePictureScreen(widget.cam),
+        '/homepage': (BuildContext context) => new homepage(null, null,widget.cam,null,null,null,null,false,false,false,false,false,false),
+        '/username':(BuildContext context) => new UserName(null,widget.cam),
+        '/splash':(BuildContext context) => new Splash(_user),
+        '/takePicture': (BuildContext context) =>
+            new TakePictureScreen(widget.cam,null,null,null,null,false,false,false,false,false),
       },
       debugShowCheckedModeBanner: false,
-      home: _user ? homepage(null,null,null) : choice(),
+      home: Splash(_user),
     );
   }
 }

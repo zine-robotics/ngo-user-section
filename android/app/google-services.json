@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "601341921167-rhfvi5p6v6hpqopehfjsrmmr1ekhbpi4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "rushilmakkar.ngouser",
+            "certificate_hash": "f8032d4e45c8c716c84d56ca892dd25f89a96144"
+          }
+        },
+        {
           "client_id": "601341921167-glm1u6htprb9rb51k0fqj86ac9b0hrsh.apps.googleusercontent.com",
           "client_type": 3
         }

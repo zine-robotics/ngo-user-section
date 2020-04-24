@@ -1,7 +1,17 @@
+import 'dart:ui';
+import 'package:ngouser/widgets/loading_screen.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:splashscreen/splashscreen.dart';
+
+import 'CircularButton.dart';
 /**Here will be choice between user and NGO */
 
 import 'package:flutter/material.dart';
-import './login.dart';
+
+import 'login.dart';
+
+double _sigmaX = 3.0; // from 0-10
+double _sigmaY = 3.0; // from 0-10
 
 class choice extends StatefulWidget {
   @override
@@ -10,9 +20,23 @@ class choice extends StatefulWidget {
 
 class _choiceState extends State<choice> {
   //userLogin() is a function just to open login page and doesn't actually log in
+  bool showSpinner = false;
   void userLogin() {
     //Navigator.pushReplacementNamed(context, '/login');
-    Navigator.pushNamed(context,'/login');
+    Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.rightToLeft,
+          child:null
+              /*SplashScreen(
+            seconds: 4,
+            navigateAfterSeconds: new login(),
+            backgroundColor: Theme.of(context).primaryColor,
+            image: Image.asset('assets/images/load.gif'),
+            photoSize: 100,
+          ),*/
+            //  Load('/login',5),
+        ));
   }
 
   /*void userSignup() {
@@ -23,51 +47,64 @@ class _choiceState extends State<choice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('NGO User'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        //crossAxisAlignment: CrossAxisAlignment.end  ,
-        children: <Widget>[
-          Center(
-            child: Text(
-              'User Log in with mobile number',
-              style: TextStyle(fontWeight: FontWeight.bold),
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/ChoiceFinal.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
-          /* Center(
-            child: CustomButton('Sign up', userSignup),
-          ),*/
-          Center(
-            child: CustomButton('Log In', userLogin),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final VoidCallback callback;
-  final String text;
-
-  CustomButton(this.text, this.callback);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Material(
-        borderRadius: BorderRadius.circular(30),
-        elevation: 6,
-        color: Colors.blueAccent,
-        child: MaterialButton(
-          onPressed: callback,
-          child: Text(text),
-          minWidth: 200,
-          height: 45,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
+            child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.end  ,
+              children: <Widget>[
+                Container(
+                  height: 160,
+                ),
+                Container(
+                  child: Text(
+                    "Welcome",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Lato',
+                      fontSize: 55,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 6,
+                ),
+                Container(
+                  child: Text(
+                    'Sign-in to continue',
+                    style: TextStyle(
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                /* Center(
+                  child: CustomButton('Sign up', userSignup),
+                ),*/
+                Container(
+                  height: 100,
+                ),
+                Center(
+                  child: CustomButton(
+                      'Sign in with phone number', userLogin, Icons.phone),
+                ),
+                Container(
+                  height: 10,
+                ),
+                //CustomButton('Sign in with email',(){} ,Icons.email)
+              ],
+            ),
+          ),
         ),
       ),
     );

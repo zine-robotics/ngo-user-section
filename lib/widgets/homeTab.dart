@@ -16,12 +16,10 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   //ScrollController scrollController = new ScrollController();
   ScrollController scrollController = ScrollController(
-  initialScrollOffset: 30 ,
+    initialScrollOffset: 30,
   );
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +29,30 @@ class _HomeTabState extends State<HomeTab> {
         children: <Widget>[
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('requests').snapshots(),
+              stream: _firestore
+                  .collection('requests')
+                  .orderBy('date', descending: true)
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData == null) {
                   return CircularProgressIndicator();
-                } else {
+                } 
+                else {
                   List<DocumentSnapshot> docs = snapshot.data.documents;
                   List<Widget> requests = docs.map((doc) {
-                    Requests(doc.data['latitude'], doc.data['longitude'],
-                        doc.data['img'], doc.data['date']);
+                    Requests(
+                      doc.data['latitude'],
+                      doc.data['longitude'],
+                      doc.data['img'],
+                      doc.data['date'],
+                    );
                   }).toList();
                   //scrollController.animateTo(scrollController.position.maxScrollExtent,
-                    //  duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+                  //  duration: Duration(milliseconds: 300), curve: Curves.easeOut);
                   return ListView(
-                    key: ValueKey<int>(Random(DateTime.now().millisecondsSinceEpoch).nextInt(4294967296)),
+                    key: ValueKey<int>(
+                        Random(DateTime.now().millisecondsSinceEpoch)
+                            .nextInt(4294967296)),
                     scrollDirection: Axis.vertical,
                     //shrinkWrap: true,
                     //controller: scrollController,
@@ -70,17 +78,19 @@ class Requests extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(6),
+      padding: EdgeInsets.all(50),
       child: Card(
+        margin: EdgeInsets.all(20),
         child: Row(
           children: <Widget>[
             Column(
               children: <Widget>[
-                FittedBox(child: Text('Latitude:${latitude}')),
+                /*FittedBox(child: Text('Latitude:${latitude}')),
                 FittedBox(child: Text('Latitude:${longitude}')),
-                FittedBox(child: Text('Time:${date}')),
+                FittedBox(child: Text('Time: ' + date)),
+                */
               ],
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
             )
           ],
         ),

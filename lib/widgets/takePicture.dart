@@ -6,29 +6,31 @@ import 'package:path_provider/path_provider.dart';
 import 'displayPic.dart';
 
 class TakePictureScreen extends StatefulWidget {
+  //final address;
   final camera;
-  TakePictureScreen(this.camera);
+  final initialLatitude, initialLongitude, landmark, pickedLocation;
+  final bool food,women,clothes,medicine,children;
+  TakePictureScreen(this.camera, this.initialLatitude, this.initialLongitude,
+      this.landmark, this.pickedLocation, this.food, this.women, this.clothes, this.medicine, this.children);
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
-  
   CameraController _controller;
   Future<void> _initializeControllerFuture;
-  
 
   @override
   void initState() {
     super.initState();
-    print(widget.camera);
-    
+    //print(widget.camera);
+
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
       // Get a specific camera from the list of available cameras.
       widget.camera,
-      
+
       // Define the resolution to use.
       ResolutionPreset.medium,
     );
@@ -47,7 +49,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Take a picture')),
+      appBar: AppBar(title: Text('Take a picture'),backgroundColor: Colors.black,),
       // Wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner
       // until the controller has finished initializing.
@@ -64,7 +66,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera_alt),
+        elevation: 6,
+        backgroundColor: Colors.teal,
+        child: Icon(Icons.camera,size: 35,),
         // Provide an onPressed callback.
         onPressed: () async {
           // Take the Picture in a try / catch block. If anything goes wrong,
@@ -86,12 +90,26 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             await _controller.takePicture(path);
 
             // If the picture was taken, display it on a new screen.
-            Navigator.push(
+            var path1 = await Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path),
+                builder: (context) => DisplayPictureScreen(
+                  imagePath: path,
+                  initialLatitude: widget.initialLatitude,
+                  initialLongitude: widget.initialLongitude,
+                  landmark: widget.landmark,
+                  pickedLocation: widget.pickedLocation,
+                  cam: widget.camera,
+                  food: widget.food,
+                  clothes: widget.clothes,
+                  women: widget.women,
+                  medicine: widget.medicine,
+                  children: widget.children,
+
+                ),
               ),
             );
+            Navigator.of(context).pop(path1);
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
